@@ -27,6 +27,9 @@ This project was developed as a personal initiative with no intention of partici
 
 ![image](https://github.com/Akshay-Arjun/National-Project-Management/assets/68991993/b1fc3907-a1d9-46c2-8f5f-cabac21ef3a5)
 
+## Add the Database if you need mysql at https://github.com/Akshay-Arjun/National-Project-Management/blob/895ca43cc50b7edfb105d751329e596b2d2706c7/national-pm/local_settings.py#L31
+## Change email settings ( this is used for reset password emails sent to users ) at https://github.com/Akshay-Arjun/National-Project-Management/blob/895ca43cc50b7edfb105d751329e596b2d2706c7/national-pm/local_settings.py#L45
+
 # Modules
 ## Teams
 Teams are made up of members, and every team has a leader. Team leaders have
