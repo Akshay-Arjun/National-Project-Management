@@ -1,0 +1,20 @@
+{% extends 'base/base_background.html' %}
+
+{% block content %}
+  <div class="container d-flex justify-content-center align-items-center mb-3 min-vh-100">
+    <div class="col-12 col-lg-10 col-xl-8">
+      {% include "base/base_messages.html" %}
+
+      {% block aboveCard %}
+      {% endblock aboveCard %}
+
+      <div class="card mb-3 border-primary">
+        {% block cardContent %}
+        {% endblock cardContent %}
+      </div>
+
+      {% block belowCard %}
+      {% endblock belowCard %}
+    </div>
+  </div>
+{% endblock content %}

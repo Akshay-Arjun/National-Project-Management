@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-lg mb-3">
+  <div class="row mb-3">
+    <div class="col-md-9 ml-auto">
+      {% include "base/base_messages.html" %}
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-3 mb-3">
+      {% block nav %}
+      {% endblock nav %}
+    </div>
+
+    <div class="col-md-9 no-gutters">
+      {% block table %}
+      {% endblock table %}
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+  {{ block.super }}
+  <script src="{% static 'base/scripts/tableFunctions.js' %}"></script>
+{% endblock scripts %}

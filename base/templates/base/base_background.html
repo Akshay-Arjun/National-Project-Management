@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block styles %}
+  {{ block.super }}
+  <style>
+    .background {
+      background-color: rgba(255, 255, 255, 0.3);
+      background-blend-mode: lighten;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+  </style>
+{% endblock styles %}
+
+{% block openBodyTag %}
+  <body class="background">
+{% endblock openBodyTag %}
+
+{% block footer %}
+  {{ block.super }}
+  <footer class="position-absolute bg-light w-100 text-center">
+    <p class="text-muted">
+    </p>
+  </footer>
+{% endblock footer %}

@@ -1,0 +1,56 @@
+{% extends 'base/base_background.html' %}
+
+{% load static %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-6">
+      <h1 class="display-4">Welcome to National - Project Management</h1>
+      <p class="lead">Your Ultimate Project Management Solution</p>
+      <p>Simplify, Organize, Collaborate</p>
+      <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Login</a>
+      <a href="{% url 'register' %}" class="btn btn-outline-primary btn-lg ml-2">Get Started</a>
+    </div>
+    <div class="col-md-6">
+      <img src="{% static 'base/images/project_management.png' %}" alt="Project Management" class="img-fluid">
+    </div>
+  </div>
+</div>
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="h4">Effortless Project Management</h2>
+          <p class="lead">
+            Take the complexity out of project management with National - PMS. Whether you're a solo task manager or part of a team, we've got you covered. Our user-friendly platform simplifies the process.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="h4">Stay Organized</h2>
+          <p class="lead">
+            Keep your work meticulously organized with Teams, Projects, and Tasks. Easily track deadlines, milestones, and project progress to ensure nothing gets overlooked.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="h4">Real-time Collaboration</h2>
+          <p class="lead">
+            Collaborate seamlessly with your team, no matter where they are. Our real-time communication tools enable you to share updates, messages, and files instantly, boosting productivity.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

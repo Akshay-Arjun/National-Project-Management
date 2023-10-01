@@ -1,0 +1,55 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-sm navbar-dark bg-primary mb-3">
+  {% if request.user.is_authenticated %}
+    <div class="navbar-nav mr-auto flex-row">
+      
+        <a class="nav-item nav-link pr-2
+          {% if request.resolver_match.url_name == 'dashboard' %} active {% endif %}
+        " href="{% url 'dashboard' %}">
+          Dashboard
+        </a>
+        <a class="nav-item nav-link pr-2
+          {% if '/tasks/' in request.path %} active {% endif %}
+        " href="{% url 'active-tasks' %}">
+          Tasks
+        </a>
+        <a class="nav-item nav-link pr-2
+          {% if '/projects/' in request.path %} active {% endif %}
+        " href="{% url 'active-projects' %}">
+          Projects
+        </a>
+        <a class="nav-item nav-link
+          {% if '/teams/' in request.path %} active {% endif %}
+        " href="{% url 'teams' %}">
+          Teams
+        </a>
+    </div>
+  {% endif %}
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarItems"
+    aria-controls="navbarItems" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse text-right" id="navbarItems">
+
+
+    <div class="navbar-nav ml-auto">
+      {% if request.user.is_authenticated %}
+        <a class="nav-item nav-link
+          {% if request.user.username in request.path %} active {% endif %}
+        " href="{% url 'profile' request.user.username %}">
+          Logged in as {{ request.user.username }}
+        </a>
+        <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+      {% else %}
+      <a class="navbar-item nav-link" href="{% url 'home' %}">Home</a>
+        <a class="nav-item nav-link
+          {% if '/login/' in request.path %} active {% endif %}
+        " href="{% url 'login' %}">Login</a>
+        <a class="nav-item nav-link
+          {% if '/register/' in request.path %} active {% endif %}
+        " href="{% url 'register' %}">Register</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>

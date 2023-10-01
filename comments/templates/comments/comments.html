@@ -1,0 +1,38 @@
+{# To be included in 'base_detail.html' template with a context of 'comments' #}
+
+{% load crispy_forms_tags %}
+
+<style>
+  .asteriskField {display: none;}
+</style>
+
+<div class="card border-primary">
+  <div class="card-header">
+    <h3>Comments</h3>
+  </div>
+  <ul class="list-group list-group-flush border">
+    {% if comments %}
+      {% for comment in comments %}
+        <li class="list-group-item">
+          <a href="{% url 'profile' comment.author %}">{{ comment.author }}</a>
+          <p>{{ comment.text }}</p>
+          <small class="text-muted">{{ comment.date_created|timesince }} ago</small>
+        </li>
+      {% endfor %}
+    {% else %}
+      <li class="list-group-item">
+        <small class="text-muted">No comments yet</small>
+      </li>
+    {% endif %}
+
+    <li class="list-group-item">
+      <form method="post">
+        {% csrf_token %}
+
+        {{ form|crispy }}
+
+        <button type="submit" class="btn btn-primary">Comment</button>
+      </form>
+    </li>
+  </ul>
+</div>
