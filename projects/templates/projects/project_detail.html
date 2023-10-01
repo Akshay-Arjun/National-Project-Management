@@ -1,0 +1,152 @@
+{% extends 'base/base_detail.html' %}
+
+{% load static %}
+
+{% block title %}
+  <title>Project {{ project.id }} | National - PMS</title>
+{% endblock title %}
+
+{% block nav %}
+  {% include 'projects/project_nav.html' %}
+{% endblock nav %}
+
+
+
+{% block cardContent %}
+  <div class="card-header">
+    <h2>Project ID: {{ project.id }}&emsp;Project Name: {{ project.name }}</h2>
+  </div>
+
+  <div class="d-flex border-bottom">
+    <div class="col-6" style="padding: 0.75rem 1.25rem">
+      <strong>Team leader:</strong>&emsp;
+      <a href="{% url 'profile' project.team.leader.username %}">{{ project.team.leader }}</a>
+    </div>
+    <div class="col-6 border-left" style="padding: 0.75rem 1.25rem">
+      <strong>Team:</strong>&emsp;
+      <a href="{% url 'team-detail' project.team.id %}">{{ project.team }}</a>
+    </div>
+  </div>
+
+  <ul class="list-group list-group-flush border">
+    <li class="list-group-item flex-fill">
+      <strong>Team members:</strong>
+      <ul class="list-group-item"> 
+        {% for user in project.team.members.all %}
+          <li class="mr-5"> Name :<a href="{% url 'profile' user.username %}"> {{ user.first_name }} {{ user.last_name }}</a>&emsp;
+            Roll Number : <a href="{% url 'profile' user.username %}"> {{ user.profile.roll_number }}</a></li>
+        {% endfor %}
+        
+      </ul>
+    </li>
+  </ul>
+
+  <div class="card-body border-bottom">
+    <h4>Detail</h4>
+    <p>
+      {% if project.description %}
+        {{ project.description }}
+      {% else %}
+        <small class="text-muted">This project does not have a description yet.</small>
+      {% endif %}
+    </p>
+    <h4>Technologies Used </h4>
+    <p>
+      {% if project.technologies_used %}
+      {{ project.technologies_used|slice:"1:-1"|title}}
+      {% else %}
+        <small class="text-muted">This project does not have technologies added.</small>
+      {% endif %}
+    </p>
+  </div>
+
+  <div class="d-flex border-bottom">
+    <div class="col-6" style="padding: 0.75rem 1.25rem">
+      <strong>Date created:</strong>&emsp;
+      {{ project.date_created }}
+    </div>
+    <div class="col-6 border-left" style="padding: 0.75rem 1.25rem">
+      <strong>Created by:</strong>&emsp;
+      <a href="{% url 'profile' project.created_by %}">{{ project.created_by }}</a>
+    </div>
+  </div>
+
+  <div class="d-flex border-bottom">
+    <div class="col-6" style="padding: 0.75rem 1.25rem">
+      <strong>Last modified:</strong>&emsp;
+      {{ project.date_modified }}
+    </div>
+    <div class="col-6 border-left" style="padding: 0.75rem 1.25rem">
+      <strong>Modified by:</strong>&emsp;
+      <a href="{% url 'profile' project.modified_by %}">{{ project.modified_by }}</a>
+    </div>
+  </div>
+
+  <ul class="list-group list-group-flush border">
+    <li class="list-group-item">
+      <strong>Due:</strong>&emsp;
+
+      {% if project.date_due %}
+        {{ project.date_due }}&emsp;
+        ({{ project.date_due|timeuntil }})
+      {% else %}
+        <small class="text-muted">This project does not a have a due date</small>
+      {% endif %}
+    </li>
+  </ul>
+
+  <div class="d-flex">
+    {% if project.completed %}
+      <div class="col-4 list-group-item-success" style="padding: 0.75rem 1.25rem">
+        <strong>Status:</strong>&emsp;Completed
+      </div>
+      <div class="col-4 list-group-item-success border-left" style="padding: 0.75rem 1.25rem">
+        <strong>Date completed:</strong>&emsp;{{ project.date_completed }}
+      </div>
+      <div class="col-4 list-group-item-success border-left" style="padding: 0.75rem 1.25rem">
+        <strong>Completed by:</strong>&emsp;<a href="{% url 'profile' project.completed_by %}">{{ project.completed_by }}</a>
+      </div>
+    {% else %}
+      <div class="flex-fill" style="padding: 0.75rem 1.25rem">
+        <strong>Status:</strong>&emsp;In-Progress
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="card-footer">
+    {% if request.user == project.team.leader or request.user == project.created_by %}
+      <a class="btn btn-primary" href="{% url 'project-update' project.id %}">Update</a>
+      <a class="btn btn-primary" href="{% url 'project-add-task' project.id %}">Add Task</a>
+
+      {% if not project.completed %}
+        <a class="btn btn-success" href="{% url 'project-complete' project.id %}">Complete</a>
+      {% endif %}
+
+      {% if not request.user.profile.is_demo_user %}
+        <a class="btn btn-danger float-right" href="{% url 'project-delete' project.id %}">Delete</a>
+      {% endif %}
+
+    {% elif request.user in project.team.members.all %}
+      <a class="btn btn-primary" href="{% url 'project-add-task' project.id %}">Add Task</a>
+    {% else %}
+      <small class="text-muted">You do not have permission to edit this project.</small>
+    {% endif %}
+  </div>
+{% endblock cardContent %}
+
+{% block objects %}
+  {% with project.task_set.all as task_list %}
+    {% include 'projects/project_object_list.html' %}
+  {% endwith %}
+{% endblock objects %}
+
+{% block comments %}
+  {% with project.projectcomment_set.all as comments %}
+    {% include 'comments/comments.html' %}
+  {% endwith %}
+{% endblock comments %}
+
+{% block scripts %}
+  {{ block.super }}
+  <script src="{% static 'base/scripts/tableFunctions.js' %}"></script>
+{% endblock scripts %}

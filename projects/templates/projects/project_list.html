@@ -1,0 +1,33 @@
+{% extends 'base/base_list.html' %}
+
+{% block title %}
+  <title>Projects | National - PMS</title>
+{% endblock title %}
+
+{% block nav %}
+  {% include 'projects/project_nav.html' %}
+{% endblock nav %}
+
+{% block table %}
+  <div class="row">
+  {% if request.resolver_match.url_name == 'active-projects'%}
+    <div class="col-md-8">
+      <h4>Active Projects</h4>
+      <p class="text-muted">Active projects you are a part of</p>
+    </div>
+  {% elif request.resolver_match.url_name == 'completed-projects'%}
+    <div class="col-md-8">
+      <h4>Completed Projects</h4>
+      <p class="text-muted">Completed projects you are a part of</p>
+    </div>
+  {% elif request.resolver_match.url_name == 'all-projects'%}
+    <div class="col-md-8">
+      <h4>All Projects</h4>
+      <p class="text-muted">All projects. Hint: try searching to filter</p>
+    </div>
+  {% endif %}
+
+  {% with table_id="table1" row=True %}
+    {% include 'projects/tables/generic_project_table.html' %}
+  {% endwith %}
+{% endblock table %}

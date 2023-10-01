@@ -1,0 +1,47 @@
+
+<a
+  href="{% url 'create-task' %}"
+  class="btn btn-outline-primary btn-block mb-3
+    {% if request.resolver_match.url_name == 'create-task'%}active{% endif %}">
+  New Task
+</a>
+
+<div class="card mb-3">
+  <div class="card-header text-center">
+    <strong>My tasks</strong>
+  </div>
+  <nav class="nav nav-pills flex-md-column">
+    <a
+      href="{% url 'active-tasks' %}"
+      class="nav-link
+        {% if request.resolver_match.url_name == 'active-tasks'%}active{% endif %}">
+      Active
+    </a>
+    <a
+      href="{% url 'completed-tasks' %}"
+      class="nav-link
+        {% if request.resolver_match.url_name == 'completed-tasks'%}active{% endif %}">
+      Completed
+    </a>
+    <a
+      href="{% url 'all-tasks' %}"
+      class="nav-link
+        {% if request.resolver_match.url_name == 'all-tasks'%}active{% endif %}">
+      All
+    </a>
+  </nav>
+</div>
+
+<div class="card mb-3">
+  <div class="card-header text-center">
+    <strong>Manage tasks</strong>
+  </div>
+  <nav class="nav nav-pills flex-md-column">
+    <a
+      href="{% url 'unassigned-tasks' %}"
+      class="nav-link
+        {% if request.resolver_match.url_name == 'unassigned-tasks' %}active{% endif %}">
+      Unassigned
+    </a>
+  </nav>
+</div>

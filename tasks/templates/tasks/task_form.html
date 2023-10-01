@@ -1,0 +1,43 @@
+{% extends 'base/base_detail.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+  {% if task %}
+    <title>Task {{ task.id }} | National - PMS</title>
+  {% else %}
+    <title>Create Task | National - PMS</title>
+  {% endif %}
+{% endblock title %}
+
+{% block nav %}
+  {% include 'tasks/task_nav.html' %}
+{% endblock nav %}
+
+{% block cardContent %}
+  <div class="card-header">
+  {% if task %}
+    <h2>Task {{ task.id }}</h2>
+  {% else %}
+    <h2>Create Task</h2>
+  {% endif %}
+  </div>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+
+      {{ form|crispy }}
+
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a class="btn btn-secondary" href="
+        {% if request.resolver_match.url_name == 'create-task' %}
+          {% url 'active-tasks' %}
+        {% elif request.resolver_match.url_name == 'project-add-task' %}
+          {% url 'active-projects' %}
+        {% else %}
+          {% url 'task-detail' object.id %}
+        {% endif %}
+      ">Cancel</a>
+    </form>
+  </div>
+{% endblock cardContent %}

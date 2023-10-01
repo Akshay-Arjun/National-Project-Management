@@ -1,0 +1,79 @@
+<div class="col-md-4 ml-auto mb-3 align-self-end">
+  <input type="search" class="searchInput form-control" data-table-id="{{ table_id }}" placeholder="Search" aria-label="Search table">
+</div>
+
+{# An optional closing tag so that the search box can be included in a row #}
+{% if row %}
+  </div>
+{% endif %}
+
+<div class="table-responsive">
+  <table id="{{ table_id }}" class="table table-hover">
+    <thead>
+      <tr>
+        <th class="sortHeader" data-sorted="true" data-table-id="{{ table_id }}" data-col="0" data-type="number" scope="col">
+          Project ID
+        </th>
+        <th class="sortHeader" data-sorted="false" data-table-id="{{ table_id }}" data-col="1" data-type="text" scope="col">
+          Name
+        </th>
+        <th class="sortHeader" data-sorted="false" data-table-id="{{ table_id }}" data-col="2" data-type="text" scope="col">
+          Team
+        </th>
+        <th class="sortHeader" data-sorted="false" data-table-id="{{ table_id }}" data-col="3" data-type="text" scope="col">
+          Due in
+        </th>
+        <th class="sortHeader" data-sorted="false" data-table-id="{{ table_id }}" data-col="4" data-type="text" scope="col">
+          Technologies Used
+        </th>
+        <th class="sortHeader" data-sorted="false" data-table-id="{{ table_id }}" data-col="5" data-type="text" scope="col">
+          Progress
+        </th>
+        <th class="sortHeader" data-sorted="false" data-table-id="{{ table_id }}" data-col="6" data-type="text" scope="col">
+          Status
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- We add a rotation of 0 to table rows so that the stretched links apply to the appropriate area. -->
+      {% for project in project_list %}
+        <tr {% if project.completed %}class="table-success" {% endif %} style="transform: rotate(0);">
+          <th scope="row" data-sort-value="{{ project.id }}">
+            <a href="{% url 'project-detail' project.id %}" class="stretched-link"></a>
+            {{ project.id }}
+          </th>
+          <td>{{ project.name }}</td>
+          <td>{{ project.team }}</td>
+          <td style="width: 15%;"> <!-- Adjust width as needed -->
+            {% if project.days_till_due > 7 %}
+              <span class="text-success">{{ project.date_due | timeuntil }}</span>
+            {% elif project.days_till_due > 0 and project.days_till_due <= 7 %}
+              <span class="text-warning">{{ project.date_due | timeuntil }}</span>
+            {% elif project.days_till_due <= 0 %}
+              <span class="text-danger">{{ project.date_due | timesince }} ago</span>
+            {% else %}
+              Never
+            {% endif %}
+          </td>
+          <td style="width: 20%;"> <!-- Adjust width as needed -->
+            <span style="overflow: hidden; text-overflow: ellipsis;">{{ project.technologies_used|slice:"1:-1"|title }}</span>
+          </td>
+          <td style="width: 15%;"> <!-- Adjust width as needed -->
+            {{ project.project_progress }}
+          </td>
+          <td style="width: 10%;"> <!-- Adjust width as needed -->
+            {% if project.completed %}
+              Completed
+            {% else %}
+              Active
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% if not project_list %}
+  <p class="text-muted ml-3">No projects to show</p>
+{% endif %}

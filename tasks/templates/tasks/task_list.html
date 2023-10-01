@@ -1,0 +1,38 @@
+{% extends 'base/base_list.html' %}
+
+{% block title %}
+  <title>Tasks | National - PMS</title>
+{% endblock title %}
+
+{% block nav %}
+  {% include "tasks/task_nav.html" %}
+{% endblock nav %}
+
+{% block table %}
+  <div class="row">
+  {% if request.resolver_match.url_name == 'active-tasks'%}
+    <div class="col-md-8">
+      <h4>Active Tasks</h4>
+      <p class="text-muted">Active tasks assigned to you</p>
+    </div>
+  {% elif request.resolver_match.url_name == 'completed-tasks'%}
+    <div class="col-md-8">
+      <h4>Completed Tasks</h4>
+      <p class="text-muted">Completed tasks assigned to you</p>
+    </div>
+  {% elif request.resolver_match.url_name == 'all-tasks'%}
+    <div class="col-md-8">
+      <h4>All Tasks</h4>
+      <p class="text-muted">All tasks assigned to you. Hint: try searching for 'active' or 'completed'</p>
+    </div>
+  {% elif request.resolver_match.url_name == 'unassigned-tasks'%}
+    <div class="col-md-8">
+      <h4>Unassigned Tasks</h4>
+      <p class="text-muted">Unassigned tasks from projects that you are leading</p>
+    </div>
+  {% endif %}
+
+  {% with table_id="table1" row=True %}
+    {% include 'tasks/tables/user_task_table.html' %}
+  {% endwith %}
+{% endblock table %}

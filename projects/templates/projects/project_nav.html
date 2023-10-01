@@ -1,0 +1,40 @@
+<a
+  href="{% url 'create-project' %}"
+  class="btn btn-outline-primary btn-block mb-3
+    {% if request.resolver_match.url_name == 'create-project' %}active{% endif %}">
+  New Project
+</a>
+
+<div class="card mb-3">
+  <div class="card-header text-center">
+    <strong>My projects</strong>
+  </div>
+
+  <nav class="nav nav-pills flex-md-column">
+    <a
+      href="{% url 'active-projects' %}"
+      class="nav-link
+        {% if request.resolver_match.url_name == 'active-projects' %}active{% endif %}">
+      My Active Projects
+    </a>
+    <a
+      href="{% url 'completed-projects' %}"
+      class="nav-link
+        {% if request.resolver_match.url_name == 'completed-projects' %}active{% endif %}">
+      My Completed Projects
+    </a>
+  </nav>
+</div>
+
+<div class="card mb-3">
+  <div class="card-header text-center">
+    <strong>All projects</strong>
+  </div>
+
+  <a
+    href="{% url 'all-projects' %}"
+    class="nav-link
+      {% if request.resolver_match.url_name == 'all-projects' %}active{% endif %}">
+    All Projects
+  </a>
+</div>

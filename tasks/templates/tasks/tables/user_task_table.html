@@ -1,0 +1,97 @@
+
+<div class="col-md-4 ml-auto mb-3 align-self-end">
+  <input type="search" class="searchInput form-control" data-table-id="{{ table_id }}" placeholder="Search" aria-label="Search table">
+</div>
+
+{# An optional closing tag so that the search box can be included in a row #}
+{% if row %}
+  </div>
+{% endif %}
+
+
+<table id="{{ table_id }}" class="table table-hover">
+  <thead>
+    <tr>
+      <th class="sortHeader" data-sorted="true" data-table-id="{{ table_id }}" data-col="0" data-type="number"
+        scope="col">
+        Task ID
+      </th>
+      <th class="sortHeader" data-sorted="false" data-table-id="{{ table_id }}" data-col="1" data-type="text" scope="col">
+        Title
+      </th>
+      <th class="sortHeader" data-sorted="false" data-table-id="{{ table_id }}" data-col="2" data-type="text" scope="col">
+        Project
+      </th>
+      <th class="sortHeader" data-sorted="false" data-table-id="{{ table_id }}" data-col="3" data-type="number"
+        scope="col">
+        Priority
+      </th>
+      <th class="sortHeader" data-sorted="false" data-table-id="{{ table_id }}" data-col="4" data-type="number"
+        scope="col">
+        Due in
+      </th>
+      <th class="sr-only" data-sorted="false" data-table-id="{{ table_id }}" data-col="5" data-type="text"
+        scope="col">
+        Status
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- We add a rotation of 0 to table rows so that the stretched links apply to the appropriate area. -->
+    {% for task in task_list %}
+      <tr class="{% if task.completed %}table-success{% endif %}" style="transform: rotate(0);">
+        <th scope="row" data-sort-value="{{ task.id }}">
+          <a href="{% url 'task-detail' task.id %}" class="stretched-link"></a>
+          {{ task.id }}
+        </th>
+
+        <td>{{ task.title }}</td>
+        <td>{{ task.project }}</td>
+
+        {% if task.priority_level <= 3 %}
+          <td class="text-success" data-sort-value="{{ task.priority_level }}">
+            {{ task.get_priority_level_display }}
+          </td>
+        {% elif task.priority_level <= 6 %}
+          <td class="text-warning" data-sort-value="{{ task.priority_level }}">
+            {{ task.get_priority_level_display }}
+          </td>
+        {% elif task.priority_level <= 9 %}
+          <td class="text-danger" data-sort-value="{{ task.priority_level }}">
+            {{ task.get_priority_level_display }}
+          </td>
+        {% else %}
+          <td data-sort-value="{{ task.priority_level }}">
+            {{ task.get_priority_level_display }}
+          </td>
+        {% endif %}
+
+        {% if task.days_till_due > 7 %}
+          <td class="text-success" data-sort-value="{{ task.days_till_due }}">
+            {{ task.days_till_due }}&nbsp;days
+          </td>
+        {% elif task.days_till_due > 0 and task.days_till_due <= 7 %}
+          <td class="text-warning" data-sort-value="{{ task.days_till_due }}">
+            {{ task.days_till_due }}&nbsp;days
+          </td>
+        {% else %}
+          <td class="text-danger" data-sort-value="{{ task.days_till_due }}">
+            {{ task.days_till_due }}&nbsp;days
+          </td>
+        {% endif %}
+
+        <td class="sr-only">
+          {% if task.completed %}
+            Completed
+          {% else %}
+            Active
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% if not task_list %}
+  <p class="text-muted ml-3">No tasks to show</p>
+{% endif %}

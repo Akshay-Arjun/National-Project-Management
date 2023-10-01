@@ -1,0 +1,145 @@
+{% extends 'base/base_detail.html' %}
+
+{% load duration_filters %}
+
+{% block title %}
+  <title>Task {{ task.id }} | National - PMS</title>
+{% endblock title %}
+
+{% block nav %}
+  {% include 'tasks/task_nav.html' %}
+{% endblock nav %}
+
+
+
+{% block cardContent %}
+  <div class="card-header">
+    <h2>Task ID: {{ task.id }}&emsp;Task Name: {{ task.title }}</h2>
+  </div>
+
+  <div class="d-flex border-bottom">
+    <div class="col-4" style="padding: 0.75rem 1.25rem">
+      <strong>Project:</strong>&emsp;
+      <a href="{% url 'project-detail' task.project.id %}">{{ task.project }}</a>
+    </div>
+    <div class="col-4 border-left" style="padding: 0.75rem 1.25rem">
+      <strong>Team:</strong>&emsp;
+      <a href="{% url 'team-detail' task.team.id %}">{{ task.team }}</a>
+    </div>
+    <div class="col-4 border-left" style="padding: 0.75rem 1.25rem">
+      <strong>Assigned to:</strong>&emsp;
+      {% if task.assigned_to %}
+        <a href="{% url 'profile' task.assigned_to %}">{{ task.assigned_to }}</a>
+      {% else %}
+        <div class="text-danger">Unassigned</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="card-body">
+    <h4>Detail</h4>
+    <p>
+      {% if task.description %}
+        {{ task.description }}
+      {% else %}
+        <small class="text-muted">This task does not have a description yet.</small>
+      {% endif %}
+    </p>
+  </div>
+
+  <ul class="list-group list-group-flush border">
+    <li
+      {% if task.priority_level <= 3 %}
+        class="list-group-item border-top list-group-item-success"
+      {% elif task.priority_level <= 6 %}
+        class="list-group-item border-top  list-group-item-warning"
+      {% elif task.priority_level <= 9 %}
+        class="list-group-item border-top  list-group-item-danger"
+      {% endif %}>
+      <strong>Priority:</strong>&emsp;{{ task.get_priority_level_display }}
+    </li>
+    <li class="list-group-item">
+      <strong>Estimated duration:</strong>&emsp;
+      {{ task.estimated_duration|readable_duration:"{hours}h {minutes}min" }}
+    </li>
+  </ul>
+
+  <div class="d-flex border-bottom">
+    <div class="col-6" style="padding: 0.75rem 1.25rem">
+      <strong>Date created:</strong>&emsp;{{ task.date_created }}
+    </div>
+    <div class="col-6 border-left" style="padding: 0.75rem 1.25rem">
+      <strong>Created by:</strong>&emsp;
+      <a href="{% url 'profile' task.created_by %}">{{ task.created_by }}</a>
+    </div>
+  </div>
+
+  <div class="d-flex border-bottom">
+    <div class="col-6" style="padding: 0.75rem 1.25rem">
+      <strong>Last modified:</strong>&emsp;{{ task.date_modified }}
+    </div>
+    <div class="col-6 border-left" style="padding: 0.75rem 1.25rem">
+      <strong>Modified by:</strong>&emsp;<a href="{% url 'profile' task.modified_by %}">{{ task.modified_by }}</a>
+    </div>
+  </div>
+
+  <ul class="list-group list-group-flush border">
+    <li class="list-group-item">
+      <strong>Due:</strong>&emsp;{{ task.date_due }}&emsp;({{ task.date_due|timeuntil }})
+    </li>
+  </ul>
+
+  <div class="d-flex">
+    {% if task.completed %}
+      <div class="col-4 list-group-item-success" style="padding: 0.75rem 1.25rem">
+        <strong>Status:</strong>&emsp;Completed
+      </div>
+      <div class="col-4 list-group-item-success border-left" style="padding: 0.75rem 1.25rem">
+        <strong>Date completed:</strong>&emsp;{{ task.date_completed }}
+      </div>
+      <div class="col-4 list-group-item-success border-left" style="padding: 0.75rem 1.25rem">
+        <strong>Completed by:</strong>&emsp;<a href="{% url 'profile' task.completed_by %}">{{ task.completed_by }}</a>
+      </div>
+    {% else %}
+      <div class="flex-fill" style="padding: 0.75rem 1.25rem">
+        <strong>Status:</strong>&emsp;In-Progress
+      </div>
+    {% endif %}
+    </li>
+  </div>
+  <div class="card-footer">
+
+    {% if request.user == task.team.leader or request.user == task.assigned_to or request.user == task.created_by %}
+      <a class="btn btn-primary" href="{% url 'task-update' task.id %}">Update</a>
+
+      {% if request.user == task.team.leader %}
+        <a class="btn btn-primary" href="{% url 'task-assign' task.id %}">Assign</a>
+      {% elif task.assigned_to == None and request.user in task.team.members.all %}
+        <a class="btn btn-primary" href="{% url 'task-assign-to-self' task.id %}">Assign to yourself</a>
+      {% endif %}
+
+      {% if not task.completed %}
+        <a class="btn btn-success" href="{% url 'task-complete' task.id %}">Complete</a>
+      {% endif %}
+
+      {% if request.user == task.team.leader or request.user == task.created_by %}
+        {% if not request.user.profile.is_demo_user %}
+          <a class="btn btn-danger float-right" href="{% url 'task-delete' task.id %}">Delete</a>
+        {% endif %}
+      {% endif %}
+
+    {% elif task.assigned_to == None and request.user in task.team.members.all %}
+      <a class="btn btn-primary" href="{% url 'task-assign-to-self' task.id %}">Assign to yourself</a>
+    {% else %}
+      <small class="text-muted">You do not have permission to edit this task.</small>
+    {% endif %}
+
+
+  </div>
+{% endblock cardContent %}
+
+{% block comments %}
+  {% with task.taskcomment_set.all as comments %}
+    {% include 'comments/comments.html' %}
+  {% endwith %}
+{% endblock comments %}

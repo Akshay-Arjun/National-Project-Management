@@ -1,0 +1,27 @@
+{% extends 'base/base_detail.html' %}
+
+{% block title %}
+  <title>Delete Project | National - PMS</title>
+{% endblock title %}
+
+{% block nav %}
+  {% include 'projects/project_nav.html' %}
+{% endblock nav %}
+
+{% block cardContent %}
+  <div class="card-header">
+    <h2>Delete Project</h2>
+  </div>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+
+      <h4 class="mb-3">
+        Are you sure you want to delete Project#{{ project.id }} '{{ project.name }}'?
+      </h4>
+
+      <button type="submit" class="btn btn-danger">Delete</button>
+      <a href="{% url 'project-detail' project.id %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+{% endblock cardContent %}
