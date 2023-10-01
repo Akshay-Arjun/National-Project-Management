@@ -1,4 +1,32 @@
 This project was developed as a personal initiative with no intention of participating in the Smart India Hackathon 2023.
+# Table of Contents
+
+1. [Problem Statement Details](#problem-statement-details)
+2. [Technology Stack](#technology-stack)
+3. [Main Idea](#main-idea)
+   - [Features]
+   - [UML Screenshot]
+4. [Installation & Usage](#installion--usage)
+   - [Prerequisites]
+   - [Clone Repository]
+   - [Virtual Environment]
+   - [Install Dependencies]
+   - [Apply Migrations]
+   - [Create Superuser]
+   - [Run the App]
+   - [Demo User Setup]
+   - [Logout]
+   - [Home Page]
+5. [Modules](#modules)
+   - [Teams]
+   - [Projects]
+   - [Tasks]
+   - [Dashboard](#the-dashboard)
+      - [Graphs]
+      - [Top Tasks]
+      - [Unassigned Tasks]
+      - [User's Projects]
+      - [User's Teams]
 
 # PROBLEM STATEMENT DETAILS
 | Problem Statement ID              | 1369                           |
