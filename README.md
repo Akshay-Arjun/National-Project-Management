@@ -1,4 +1,4 @@
-This project was made as a personal project with no intention in participating in Smart India Hackathon 2023.
+This project was developed as a personal initiative with no intention of participating in the Smart India Hackathon 2023.
 
 # PROBLEM STATEMENT DETAILS
 | Problem Statement ID              | 1369                           |
@@ -17,13 +17,14 @@ This project was made as a personal project with no intention in participating i
 |Bootstrap v4.5.0|
 
 # Main Idea
-- This was built to unite ONLY students from all colleges/universities/school/institutions
-- Students, can register & login or try demo user to view all projects.
-- Form Teams - Assign Team Leader & Team Members
-- Create Projects - Project Details, Deadline, Technology Stack, Progress
-- Create Tasks - Team leader can assign tasks to everyone, members can sel assign tasks
-- View all projects and their details created by students all over BHARAT.
+- The primary objective is to bring together students and their projects exclusively from various colleges, universities, schools, and institutions.
+- Students can register and log in, or they can try the demo user to explore all available projects.
+- Form Teams: Assign Team Leaders and Team Members.
+- Create Projects: Specify Project Details, Deadline, Technology Stack, and Progress.
+- Create Tasks: Team leaders can assign tasks to everyone, while members can self-assign tasks.
+- View all projects and their details created by students across Bharat.
 - Comment Section
+
 
 ![image](https://github.com/Akshay-Arjun/National-Project-Management/assets/68991993/b1fc3907-a1d9-46c2-8f5f-cabac21ef3a5)
 
