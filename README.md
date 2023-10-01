@@ -27,8 +27,45 @@ This project was developed as a personal initiative with no intention of partici
 
 ![image](https://github.com/Akshay-Arjun/National-Project-Management/assets/68991993/b1fc3907-a1d9-46c2-8f5f-cabac21ef3a5)
 
+# Installion & Usage
+## Make sure you have the following installed:
+- Python3
 ## Add the Database if you need mysql at https://github.com/Akshay-Arjun/National-Project-Management/blob/895ca43cc50b7edfb105d751329e596b2d2706c7/national-pm/local_settings.py#L31
 ## Change email settings ( this is used for reset password emails sent to users ) at https://github.com/Akshay-Arjun/National-Project-Management/blob/895ca43cc50b7edfb105d751329e596b2d2706c7/national-pm/local_settings.py#L45
+## 1. **Clone the repository:**
+   ```
+   git clone https://github.com/Akshay-Arjun/National-Project-Management
+   cd National-Project-Management
+   ```
+## 2. Create a virtual environment (optional but recommended):
+```
+python -m venv venv
+source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+```
+## 3. Install dependencies:
+```
+pip install -r requirements.txt
+```
+## 4. Apply migrations:
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+## 5. Create Super user aka admin:
+```
+python manage.py createsuperuser
+```
+## 6. Run the App
+Start the development server:
+```
+python manage.py runserver
+```
+Visit http://127.0.0.1:8000/admin in your browser login with admin and in users add new user with username and password from https://github.com/Akshay-Arjun/National-Project-Management/blob/895ca43cc50b7edfb105d751329e596b2d2706c7/national-pm/local_settings.py#L60 https://github.com/Akshay-Arjun/National-Project-Management/blob/895ca43cc50b7edfb105d751329e596b2d2706c7/national-pm/local_settings.py#L61
+Now make click on edit this user and click on checkbox which says Demo User.
+## 7. Logout 
+## 8. Home Page
+Visit http://127.0.0.1:8000/ in your browser (This page is for users aka students).
+
 
 # Modules
 ## Teams
