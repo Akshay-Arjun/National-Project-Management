@@ -1,0 +1,238 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %}
+  <title>Dashboard | National - PMS</title>
+{% endblock title %}
+
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        {% include 'base/base_messages.html' %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg mb-4">
+        <div class="card border-primary h-100">
+          <div class="card-body pb-0">
+            <div class="row">
+              <div class="col-md-12 mb-3 btn btn-outline-light border-0 text-dark text-left">
+                <h4 class="card-title">Technologies Used</h4>
+                <div>
+                  <canvas id="technologiesChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="col-lg mb-4">
+        <div class="card border-primary h-100">
+          <div class="card-body pb-0">
+            <div class="row">
+              <div class="col-md-8 mb-3 btn btn-outline-light border-0 text-dark text-left">
+                <h4 class="card-title">Completed v/s Active projects</h4>
+              </div>
+            </div>
+            <div>
+              <canvas id="projectChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg mb-4">
+        <div class="card border-primary h-100">
+          <div class="card-body pb-0">
+            <div class="row">
+            <div class="col-md-8 mb-3 btn btn-outline-light border-0 text-dark text-left">
+              <a href="{% url 'active-tasks' %}" class="stretched-link"></a>
+              <h4 class="card-title">Tasks</h4>
+              <p class="text-muted mb-0">Tasks that have been assigned to you</p>
+            </div>
+
+            {% with table_id="table1" row=True %} {# To include closing row tag #}
+              {% include 'tasks/tables/user_task_table.html' %}
+            {% endwith %}
+          </div>
+
+          <div class="card-footer">
+            <a href="{% url 'create-task' %}" class="btn btn-primary align-self-end">New task</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg mb-4">
+        <div class="card border-primary h-100">
+          <div class="card-body pb-0">
+            <div class="row">
+            <div class="col-md-8 mb-3 btn btn-outline-light border-0 text-dark text-left">
+              <a href="{% url 'unassigned-tasks' %}" class="stretched-link"></a>
+              <h4>Unassigned Tasks</h4>
+              <p class="text-muted mb-0">Unassigned tasks from projects led by you</p>
+            </div>
+
+            {% with table_id="table2" row=True task_list=unassigned_task_list %} {# To include closing row tag #}
+              {% include 'tasks/tables/user_task_table.html' %}
+            {% endwith %}
+          </div>
+
+          <div class="card-footer">
+            <a href="{% url 'create-task' %}" class="btn btn-primary align-self-end">New task</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg mb-4">
+        <div class="card border-primary h-100">
+          <div class="card-body pb-0">
+            <div class="row">
+            <div class="col-md-8 mb-3 btn btn-outline-light border-0 text-dark text-left">
+              <a href="{% url 'active-projects' %}" class="stretched-link"></a>
+              <h4>Projects</h4>
+              <p class="text-muted mb-0">Active projects that you are a part of</p>
+            </div>
+
+            {% with table_id="table3" row=True %} {# To include closing row tag #}
+              {% include 'projects/tables/generic_project_table.html' %}
+            {% endwith %}
+          </div>
+          <div class="card-footer">
+            <a href="{% url 'create-project' %}" class="btn btn-primary align-self-end">New project</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg mb-4">
+        <div class="card border-primary h-100">
+          <div class="card-body pb-0">
+            <div class="row">
+            <div class="col-md-8 mb-3 btn btn-outline-light border-0 text-dark text-left">
+              <a href="{% url 'teams' %}" class="stretched-link"></a>
+              <h4>Teams</h4>
+              <p class="text-muted mb-0">Teams that you are a part of</p>
+            </div>
+
+            {% with table_id="table4" row=True %} {# To include closing row tag #}
+              {% include 'teams/tables/generic_team_table.html' %}
+            {% endwith %}
+          </div>
+
+          <div class="card-footer">
+            <a href="{% url 'create-team' %}" class="btn btn-primary align-self-end">New team</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static 'base/scripts/tableFunctions.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var chartLabels = {{ chart_labels|safe }};
+        var chartData = {{ chart_data|safe }};
+
+        var ctx = document.getElementById('technologiesChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: chartLabels,
+                datasets: [{
+                    label: '' ,
+                    data: chartData,
+                    backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(201, 203, 207, 0.2)'
+    ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)'
+    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+
+ responsive: true, 
+              plugins: {      
+            legend: {
+            display: false
+         },
+            subtitle: {
+                display: true,
+                text: 'Technologies used in all projects present in National-PMS.'
+            }
+        },  
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                    
+                    }
+                },
+animation: false
+            }
+        });
+    </script>
+    <script>
+      var ctx = document.getElementById('projectChart').getContext('2d');
+      var myChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+              labels:['Completed', 'Active'],
+              datasets: [{
+                  label: '' ,
+                  data: [{{ project_completed_counts }}, {{ project_active_counts }}],
+                  backgroundColor: [
+    'rgba(255, 99, 132, 0.2)',
+    'rgba(255, 159, 64, 0.2)',
+    'rgba(255, 205, 86, 0.2)',
+    'rgba(75, 192, 192, 0.2)',
+    'rgba(54, 162, 235, 0.2)',
+    'rgba(153, 102, 255, 0.2)',
+    'rgba(201, 203, 207, 0.2)'
+  ],
+  borderColor: [
+    'rgb(255, 99, 132)',
+    'rgb(255, 159, 64)',
+    'rgb(255, 205, 86)',
+    'rgb(75, 192, 192)',
+    'rgb(54, 162, 235)',
+    'rgb(153, 102, 255)',
+    'rgb(201, 203, 207)'
+  ],
+                  borderWidth: 2
+              }]
+          },
+          options: {
+            maintainAspectRatio: false, // Disable aspect ratio
+        responsive: true, 
+            plugins: {      
+          subtitle: {
+              display: true,
+              text: 'Pie chart shwoing completed v/s active projects present in National-PMS.'
+          }
+      },  
+        
+          }
+      });
+  </script>
+{% endblock scripts %}

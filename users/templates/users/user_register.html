@@ -1,0 +1,28 @@
+{% extends 'base/base_single_card.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>Register | National - PMS</title>
+{% endblock title %}
+
+
+
+{% block cardContent %}
+  <div class="card-header">
+    <h3>Register</h3>
+  </div>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-primary d-block mx-auto">Register</button>
+    </form>
+  </div>
+  <div class="card-footer">
+    <small class="text-muted">
+      Already have an account? <a href="{% url 'login' %}">Log in</a>
+    </small>
+  </div>
+{% endblock cardContent %}

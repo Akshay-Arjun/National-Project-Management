@@ -1,0 +1,42 @@
+
+<div class="col-md-4 ml-auto mb-3 align-self-end">
+  <input type="search" class="searchInput form-control" data-table-id="{{ table_id }}" placeholder="Search" aria-label="Search table">
+</div>
+
+{# An optional closing tag so that the search box can be included in a row #}
+{% if row %}
+  </div>
+{% endif %}
+
+<table id="{{ table_id }}" class="table table-hover">
+  <thead>
+    <tr>
+      <th class="sortHeader" data-sorted="true" data-table-id="{{ table_id }}" data-col="0" data-type="number" scope="col">
+        Team ID
+      </th>
+      <th class="sortHeader" data-sorted="false" data-table-id="{{ table_id }}" data-col="1" data-type="text" scope="col">
+        Name
+      </th>
+      <th class="sortHeader" data-sorted="false" data-table-id="{{ table_id }}" data-col="2" data-type="text" scope="col">
+        Leader
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- We add a rotation of 0 to table rows so that the stretched links apply to the appropriate area. -->
+    {% for team in team_list %}
+      <tr style="transform: rotate(0);">
+        <th scope="row" data-sort-value="{{ team.id }}">
+          <a href="{% url 'team-detail' team.id %}" class="stretched-link"></a>
+          {{ team.id }}
+        </th>
+        <td>{{ team.name }}</td>
+        <td>{{ team.leader }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% if not team_list %}
+  <p class="text-muted ml-3">No teams to show</p>
+{% endif %}

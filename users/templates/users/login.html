@@ -1,0 +1,32 @@
+{% extends 'base/base_single_card_sea_bg.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>Login | National - PMS</title>
+{% endblock title %}
+
+
+
+{% block cardContent %}
+  <div class="card-header">
+    <h2>Login</h2>
+  </div>
+  <div class="card-body">
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      {{ form|crispy }}
+
+      <button type="submit" class="btn btn-primary d-block mx-auto">Log in</button>
+    </form>
+  </div>
+  <div class="card-footer">
+    <small class="d-block">
+      Don't have an account? <a href="{% url 'register' %}" class="text-success"> Register an account here!</a> or <a href="{% url 'demo-user-login' %}" class="text-warning" >login as a demo user</a> to try it out.
+    </small>
+    <small class="text-muted d-block">
+     <a href="{% url 'password_reset' %}" class="text-danger">Forgot Your Password?</a>
+    </small>
+  </div>
+{% endblock cardContent %}

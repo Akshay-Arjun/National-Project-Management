@@ -1,0 +1,20 @@
+{% extends 'base/base_detail.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>Profile Update | National - PMS</title>
+{% endblock title %}
+
+{% block cardContent %}
+  <div class="card-header">
+    <h2>Profile Update</h2>
+  </div>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}  
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a class="btn btn-secondary" href="{% url 'profile' user.username %}">Cancel</a>
+    </form>
+  </div>
+{% endblock cardContent %}

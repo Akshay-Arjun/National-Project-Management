@@ -1,0 +1,21 @@
+{% extends 'base/base_single_card.html' %}
+
+{% block title %}
+  <title>Logout | National - PMS</title>
+{% endblock title %}
+
+{% block cardHeader %}
+  Logged out
+{% endblock cardHeader %}
+
+{% block cardContent %}
+  <div class="card-header">
+    Logged out
+  </div>
+  <div class="card-body">
+    You have been succesfully logged out.
+  </div>
+  <div class="container text-center my-5">
+    <a href="{% url 'home' %}" class="btn btn-primary btn-lg">Go to Home :)</a>
+  </div>
+{% endblock cardContent %}

@@ -1,0 +1,81 @@
+{% extends 'base/base_detail.html' %}
+
+{% load static %}
+{% load duration_filters %}
+
+{% block title %}
+  <title>Team {{ team.id }} | National - PMS</title>
+{% endblock title %}
+
+{% block nav %}
+  {% include 'teams/team_nav.html' %}
+{% endblock nav %}
+
+
+
+{% block cardContent %}
+  <div class="card-header">
+    <h2> Team ID : {{ team.id }}&emsp;Team Name : {{ team.name }}</h2>
+  </div>
+
+  <ul class="list-group list-group-flush border">
+    <li class="list-group-item">
+      <strong>Team leader:</strong>&emsp;
+      <a href="{% url 'profile' team.leader %}">{{ team.leader.first_name }} {{ team.leader.last_name }} </a>
+    </li>
+    <li class="list-group-item">
+      <strong>Team members:</strong>
+      <ul>
+        {% for member in team.members.all %}
+          <li><a href="{% url 'profile' member %}">{{ member.first_name }} {{ member.last_name }}</a>&emsp;
+           Roll Number <a href="{% url 'profile' member %}">{{ member.profile.roll_number }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </li>
+  </ul>
+
+  <div class="d-flex border-bottom">
+    <div class="col-6" style="padding: 0.75rem 1.25rem">
+      <strong>Date created:</strong>&emsp;{{ team.date_created }}
+    </div>
+    <div class="col-6 border-left" style="padding: 0.75rem 1.25rem">
+      <strong>Created by:</strong>&emsp;
+      <a href="{% url 'profile' team.created_by %}">{{ team.created_by.first_name }} {{ team.created_by.last_name }}</a>
+    </div>
+  </div>
+
+  <div class="d-flex">
+    <div class="col-6" style="padding: 0.75rem 1.25rem">
+      <strong>Last modified:</strong>&emsp;{{ team.date_modified }}
+    </div>
+    <div class="col-6 border-left" style="padding: 0.75rem 1.25rem">
+      <strong>Modified by:</strong>&emsp;<a href="{% url 'profile' team.modified_by %}">{{ team.modified_by.first_name }} {{ team.modified_by.last_name }}</a>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    {% if request.user == team.leader or request.user == team.created_by %}
+      <a class="btn btn-primary" href="{% url 'team-update' team.id %}">Update</a>
+
+      {% if not request.user.profile.is_demo_user %}
+        <a class="btn btn-danger float-right" href="{% url 'team-delete' team.id %}">Delete</a>
+      {% endif %}
+    {% else %}
+      <small class="text-muted">You do not have permission to edit this team</small>
+    {% endif %}
+  </div>
+{% endblock cardContent %}
+
+{% block objects %}
+  {% with team.project_set.all as project_list %}
+    {% with team.get_related_tasks as task_list %}
+      {% include 'teams/team_object_list.html' %}
+    {% endwith %}
+  {% endwith %}
+{% endblock objects %}
+
+{% block scripts %}
+  {{ block.super }}
+  <script src="{% static 'base/scripts/tableFunctions.js' %}"></script>
+{% endblock scripts %}

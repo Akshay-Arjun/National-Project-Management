@@ -1,0 +1,19 @@
+
+<div class="nav nav-pills mb-3 position-absolute" id="nav-pill" role="tablist">
+  <a class="nav-item nav-link" id="nav-task-table-tab" href="#task-table" data-toggle="pill" role="tab" aria-controls="task-table" aria-selected="false">Tasks</a>
+  <a class="nav-item nav-link" id="nav-project-table-tab" href="#project-table" data-toggle="pill" role="tab" aria-controls="team-table" aria-selected="false">Projects</a>
+</div>
+
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade" id="task-table" role="tabpanel" aria-lablledby="task-table">
+    {% with 'table1' as table_id %}
+      {% include 'tasks/tables/generic_task_table.html' %}
+    {% endwith %}
+  </div>
+
+  <div class="tab-pane fade" id="project-table" role="tabpanel" aria-lablledby="project-table">
+    {% with 'table2' as table_id %}
+      {% include 'projects/tables/generic_project_table.html' %}
+    {% endwith %}
+  </div>
+</div>

@@ -1,0 +1,14 @@
+appdirs==1.4.3
+asgiref==3.2.7
+attrs==19.3.0
+black==19.10b0
+click==7.1.2
+Django==3.1.14
+django-crispy-forms==1.9.1
+pathspec==0.8.0
+pycodestyle==2.6.0
+pytz==2020.1
+regex==2020.4.4
+sqlparse==0.4.4
+toml==0.10.0
+typed-ast==1.4.1

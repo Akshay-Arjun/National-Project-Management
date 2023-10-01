@@ -1,0 +1,22 @@
+{% extends 'base/base_single_card_sea_bg.html' %}
+
+{% block title %}
+  <title>Login | National - PMS</title>
+{% endblock title %}
+
+{% block cardContent %}
+  <div class="card-header">
+    <h4>Logging in as a demo user...</h4>
+  </div>
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+
+      <p>
+        Note that demo users cannot create, update or delete anything on the site.
+      </p>
+
+      <button type="submit" class="btn btn-primary d-block mx-auto">Continue</button>
+    </form>
+  </div>
+{% endblock cardContent %}

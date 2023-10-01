@@ -1,0 +1,21 @@
+{% extends 'base/base_list.html' %}
+
+{% block title %}
+  <title>Teams | National - PMS</title>
+{% endblock title %}
+
+{% block nav %}
+  {% include "teams/team_nav.html" %}
+{% endblock nav %}
+
+{% block table %}
+  <div class="row">
+  <div class="col-md-8">
+    <h4>Teams</h4>
+    <p class="text-muted">Teams you are a part of</p>
+  </div>
+
+  {% with table_id="table1" row=True %}
+    {% include 'teams/tables/generic_team_table.html' %}
+  {% endwith %}
+{% endblock table %}
