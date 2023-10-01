@@ -8,3 +8,22 @@ This project was made as a personal project with no intention in participating i
 | Organization                      | Government of Jharkhand          |
 | Category                          | Software                         |
 | Domain Bucket                     | Smart Education                  |
+
+# Technology Stack
+| Python |
+|--------|
+| Django|
+|Sqlite3 / Mysql|
+|Bootstrap v4.5.0|
+
+# Main Idea
+- This was built to unite ONLY students from all colleges/universities/school/institutions
+- Students, can register & login or try demo user to view all projects.
+- Form Teams - Assign Team Leader & Team Members
+- Create Projects - Project Details, Deadline, Technology Stack, Progress
+- Create Tasks - Team leader can assign tasks to everyone, members can sel assign tasks
+- View all projects and their details created by students all over BHARAT.
+- Comment Section
+
+![image](https://github.com/Akshay-Arjun/National-Project-Management/assets/68991993/b1fc3907-a1d9-46c2-8f5f-cabac21ef3a5)
+
